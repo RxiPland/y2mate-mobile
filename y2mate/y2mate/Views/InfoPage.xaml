@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="y2mate.Views.InfoPage">
+
+    <StackLayout Margin="20" Spacing="15">
+        
+        <StackLayout Orientation="Horizontal" Spacing="15">
+
+            <Image Source="icon_y2mate.png" HeightRequest="35"/>
+            <Button x:Name="y2mateWebButton" Text="y2mate.com" Clicked="y2mateWebButton_Clicked" HorizontalOptions="FillAndExpand"/>
+        </StackLayout>
+
+        <StackLayout Orientation="Horizontal" Spacing="15">
+            <Image HeightRequest="40">
+                <Image.Source>
+                    <FontImageSource FontFamily="FAB" Glyph="{StaticResource FAB_Github}" Color="Black"/>
+                </Image.Source>
+            </Image>
+
+            <Button x:Name="SourceCodeButton" Text="Zdrojový kód" Clicked="SourceCodeButton_Clicked" HorizontalOptions="FillAndExpand"/>
+        </StackLayout>
+    </StackLayout>
+
+</ContentPage>
