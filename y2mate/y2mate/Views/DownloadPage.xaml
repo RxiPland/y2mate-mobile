@@ -2,11 +2,73 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="y2mate.Views.DownloadPage">
-    <ContentPage.Content>
+
+    <ScrollView>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <StackLayout Orientation="Vertical" Spacing="5" Margin="20">
+
+                <Label>
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Název: " FontAttributes="Bold" FontSize="16"/>
+                            <Span x:Name="videoTitle" FontSize="16"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <Label>
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Délka: " FontAttributes="Bold" FontSize="16"/>
+                            <Span x:Name="videoLength" FontSize="16"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <Label>
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Kanál: " FontAttributes="Bold" FontSize="16"/>
+                            <Span x:Name="ytChannel" FontSize="16"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+            </StackLayout>
+
+            <StackLayout Margin="10">
+                <Picker Title="Vyberte formát" x:Name="PickerFormat" SelectedIndexChanged="PickerFormat_SelectedIndexChanged"/>
+                <Picker Title="Vyberte kvalitu" x:Name="PickerQuality" IsVisible="False" SelectedIndexChanged="PickerQuality_SelectedIndexChanged"/>
+            </StackLayout>
+
+            <StackLayout Spacing="60">
+                <Grid>
+                    <Button x:Name="downloadButton" Text="Stáhnout" Margin="40" IsEnabled="False" Clicked="DownloadButton_Clicked"/>
+
+                    <ActivityIndicator IsVisible="False" Opacity="0" x:Name="InnerActivityIndicator" IsRunning="True" HorizontalOptions="Center" Color="White">
+                        <ActivityIndicator.Margin>
+                            <OnPlatform x:TypeArguments="Thickness">
+                                <On Platform="iOS" Value="0,0,10,0"></On>
+                            </OnPlatform>
+                        </ActivityIndicator.Margin>
+                        <ActivityIndicator.Scale>
+                            <OnPlatform x:TypeArguments="x:Double">
+                                <On Platform="iOS">1</On>
+                                <On Platform="Android">0.7</On>
+                            </OnPlatform>
+                        </ActivityIndicator.Scale>
+                    </ActivityIndicator>
+                </Grid>
+
+                <StackLayout Margin="11" >
+                    <Label Text="Probíhá stahování:" x:Name="DownloadLabel" IsVisible="False" FontSize="18"/>
+                    <ProgressBar x:Name="DownloadProgressBar" IsVisible="False" ScaleY="2"/>
+                    <Label x:Name="DownloadedDataLabel" IsVisible="False" FontSize="17"/>
+                </StackLayout>
+            </StackLayout>
+
         </StackLayout>
-    </ContentPage.Content>
+    </ScrollView>
+
+
 </ContentPage>
