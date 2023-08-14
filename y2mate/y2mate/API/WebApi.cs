@@ -569,7 +569,7 @@ namespace y2mate.API
                         TempVideoItem.VideoUrl = TempJson["VideoUrl"]?.ToString() ?? string.Empty;
                         TempVideoItem.VideoDurationTimeSec = int.Parse(TempJson["VideoDurationTimeSec"]?.ToString() ?? "0");
 
-                        TempVideosHistory.Add(TempVideoItem);
+                        TempVideosHistory.Insert(0, TempVideoItem);
                     }
 
                     foundVideosHistory.AddRange(TempVideosHistory);
