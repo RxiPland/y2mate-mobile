@@ -1,6 +1,6 @@
 # Y2mate Android
 
-- (Not an Official App!)
+- Toto není oficiální aplikace! (This is not an official App!)
 - Nenáročná aplikace pro stahování videí/hudby z youtube
 - Aplikace využívá stránku [y2mate.com](https://www.y2mate.com/)
 #
