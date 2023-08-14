@@ -337,18 +337,18 @@ namespace y2mate.Views
 
                 if (doesExist)
                 {
-                    rename = await DisplayAlert("Problém", $"Video se stejným názvem již ve složce existuje.", "Přejmenovat", "Přepsat");
+                    rename = await DisplayAlert("Problém", $"Video se stejným názvem již ve složce existuje.", "Přepsat", "Přejmenovat");
 
                     if (rename)
-                    {
-                        // Back to selecting name
-                        continue;
-                    }
-                    else
                     {
                         // Overwrite (delete) file
                         System.IO.File.Delete(filePath);
                         break;
+                    }
+                    else
+                    {
+                        // Back to selecting name
+                        continue;
                     }
                 }
                 else
