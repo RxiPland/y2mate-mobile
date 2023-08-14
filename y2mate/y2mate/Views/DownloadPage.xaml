@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="y2mate.Views.DownloadPage">
+             x:Class="y2mate.Views.DownloadPage"
+             Shell.PresentationMode="ModalAnimated">
 
     <ScrollView>
-        <StackLayout>
+        <StackLayout Padding="0,20,0,0">
             <StackLayout Orientation="Vertical" Spacing="5" Margin="20">
 
                 <Label>
@@ -41,7 +42,7 @@
                 <Picker Title="Vyberte kvalitu" x:Name="PickerQuality" IsVisible="False" SelectedIndexChanged="PickerQuality_SelectedIndexChanged"/>
             </StackLayout>
 
-            <StackLayout Spacing="60">
+            <StackLayout Spacing="20">
                 <Button x:Name="downloadButton" Text="Stáhnout" Margin="40" IsEnabled="False" Clicked="DownloadButton_Clicked"/>
 
                 <StackLayout>

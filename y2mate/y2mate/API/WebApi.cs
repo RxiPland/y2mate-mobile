@@ -73,8 +73,7 @@ namespace y2mate.API
             return result;
         }
 
-
-        public static async Task<JObject> DownloadVideo(FoundVideoModel VideoItem, string Y2mateVideoKey)
+        public static async Task<JObject> GetVideoUrl(FoundVideoModel VideoItem, string Y2mateVideoKey)
         {
             JObject result = new JObject
             {
@@ -350,7 +349,7 @@ namespace y2mate.API
                 // HTTP request exception
 
                 result["Success"] = false;
-                result["ErrorMessage"] = ex?.Message ?? string.Empty;
+                result["ErrorMessage"] = ex?.ToString() ?? string.Empty;
 
                 return result;
             }
@@ -359,7 +358,7 @@ namespace y2mate.API
                 // Another exception
 
                 result["Success"] = false;
-                result["ErrorMessage"] = e?.Message ?? string.Empty;
+                result["ErrorMessage"] = e?.ToString() ?? string.Empty;
 
                 return result;
             }
@@ -456,6 +455,11 @@ namespace y2mate.API
         {
             // Remove multiple whitespaces when in a row
 
+            if (string.IsNullOrEmpty(text))
+            {
+                return string.Empty;
+            }
+
             text = text.Trim();
             string newText = string.Empty;
             bool WhiteSpaceFound = false;
@@ -485,7 +489,7 @@ namespace y2mate.API
             // Remove forbidden chars for filename and replace them with whitespace
             // Whitespaces in a row will be deleted
 
-            if (text == string.Empty || text == null)
+            if (string.IsNullOrEmpty(text))
             {
                 return string.Empty;
             }

@@ -11,7 +11,7 @@ namespace y2mate.Config
         public static readonly string AppName = "y2mate";
 
         public static readonly string SettingsFileName = "Settings.json";
-        public static readonly string downloadFolder = "/storage/emulated/0/Download";
+        public static readonly string DownloadFolder = "/storage/emulated/0/Download";
 
 
         // Networking

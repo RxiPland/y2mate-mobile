@@ -14,7 +14,11 @@ namespace y2mate.Config
         public static readonly string NoJsonReturned = $"Server ({GlobalConfig.ApiDomain}) nevrátil potřebný JSON! Vrátil:\n\n";
         public static readonly string FullUrlRequiredError = "Vložte prosím úplnou URL adresu!\n\nPř.\nhttps://www.youtube.com/watch?v=MNeX4EGtR5Y";
         public static readonly string KeyFromResponseNotFound = "Klíč \"{key}\" ve vráceném JSONu neexistuje!";
+        public static readonly string KeysNotFound = "Nepodařilo se najít klíče k videím!";
         public static readonly string VideoNotExists = "Video pod tímto odkazem neexistuje!";
+        public static readonly string VideoStillConverting = "Soubor se ještě připravuje. Zkuste to za chvíli.";
+        public static readonly string AnErrorHasOccurred = "Server vrátil neznámou chybu. Zkuste to za chvíli.";
+        public static readonly string EmptyFileUrlError = "Url adresa souboru nemůže být prázdná!";
 
     }
 }
