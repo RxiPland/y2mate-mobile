@@ -14,6 +14,8 @@ using Plugin.Connectivity;
 using y2mate.Config;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
+using System.Security.Cryptography;
+using y2mate.Models;
 
 namespace y2mate.API
 {
@@ -53,8 +55,6 @@ namespace y2mate.API
 
             JObject PostResult = await Task.Run(() => PostRequest(GlobalConfig.ApiSearchUrl, postData, "application/x-www-form-urlencoded"));
 
-
-
             string ErrorMessage = PostResult["ErrorMessage"]?.ToString() ?? string.Empty;
             bool Success = bool.Parse(PostResult["Success"]?.ToString() ?? "false");
 
@@ -74,6 +74,45 @@ namespace y2mate.API
         }
 
 
+        public static async Task<JObject> DownloadVideo(FoundVideoModel VideoItem, string Y2mateVideoKey)
+        {
+            JObject result = new JObject
+            {
+                { "Success", null },
+                { "ErrorMessage", null },
+                { "ResponseHtml", null }
+            };
+
+
+            JObject PostData = new JObject
+            {
+                {"vid", VideoItem.VideoId},
+                {"k", Y2mateVideoKey}
+            };
+
+
+            string postData = JsonUrlEncode(PostData);
+
+            JObject PostResult = await Task.Run(() => PostRequest(GlobalConfig.ApiRequestVideoUrl, postData, "application/x-www-form-urlencoded"));
+
+
+            string ErrorMessage = PostResult["ErrorMessage"]?.ToString() ?? string.Empty;
+            bool Success = bool.Parse(PostResult["Success"]?.ToString() ?? "false");
+
+            if ((!Success) || (ErrorMessage != string.Empty))
+            {
+                result["Success"] = false;
+                result["ErrorMessage"] = ErrorMessage;
+                return result;
+            }
+
+
+            // Everything OK
+            result["Success"] = true;
+            result["ErrorMessage"] = ErrorMessage ?? string.Empty;
+            result["ResponseHtml"] = PostResult["Response"];
+            return result;
+        }
 
         public static async Task<JObject> PostRequest(string Url, string data, string contentType, CookieContainer cookieContainer = null)
         {
@@ -412,5 +451,76 @@ namespace y2mate.API
             return reg.Match(url).Success;
         }
 
+
+        public static string CleanWhiteSpaces(string text)
+        {
+            // Remove multiple whitespaces when in a row
+
+            text = text.Trim();
+            string newText = string.Empty;
+            bool WhiteSpaceFound = false;
+
+            foreach (char c in text)
+            {
+                if (c != ' ')
+                {
+                    newText += c;
+                    WhiteSpaceFound = false;
+                }
+                else
+                {
+                    if (!WhiteSpaceFound)
+                    {
+                        newText += ' ';
+                        WhiteSpaceFound = true;
+                    }
+                }
+            }
+
+            return newText;
+        }
+
+        public static string RemoveForbiddenChars(string text)
+        {
+            // Remove forbidden chars for filename and replace them with whitespace
+            // Whitespaces in a row will be deleted
+
+            if (text == string.Empty || text == null)
+            {
+                return string.Empty;
+            }
+
+            List<char> forbiddenChars = new() { '<', '>', ':', '\"', '/', '\\', '|', '?', '*' };
+            string tempText = text.ToString();
+
+            foreach (char c in forbiddenChars)
+            {
+                tempText = tempText.Replace(c, ' ');
+            }
+
+            return CleanWhiteSpaces(tempText);
+        }
+
+        public static string GenerateMD5Hash(string input)
+        {
+            // Convert string to MD5 hex string
+
+            using MD5 md5 = MD5.Create();
+
+            // Converting string to bytes
+            byte[] inputBytes = Encoding.UTF8.GetBytes(input);
+
+            // Calculating MD5
+            byte[] hashBytes = md5.ComputeHash(inputBytes);
+
+            // Converting bytes to Hex string
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < hashBytes.Length; i++)
+            {
+                sb.Append(hashBytes[i].ToString("x2"));
+            }
+
+            return sb.ToString();
+        }
     }
 }

@@ -13,6 +13,7 @@ namespace y2mate.Models
 
         public string VideoTitle { get; set; }
         public int VideoDurationTimeSec { get; set; }
+        public string VideoUrl { get; set; }
         public string VideoId { get; set; }
         public string YtChannel { get; set; }
 

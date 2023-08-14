@@ -16,7 +16,7 @@ namespace y2mate.Config
 
         // Networking
         public static readonly string ApiDomain = "y2mate.com";
-        public static readonly string ApiUrl = "https://" + "www.y2mate.com";
+        public static readonly string ApiUrl = "https://" + "www." + ApiDomain;
         public static readonly string ApiSearchUrl = ApiUrl + "/mates/analyzeV2/ajax";
         public static readonly string ApiRequestVideoUrl = ApiUrl + "/mates/convertV2/index";
 

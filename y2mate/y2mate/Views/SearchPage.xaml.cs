@@ -149,6 +149,8 @@ namespace y2mate.Views
                 }
 
                 FoundVideoModel VideoItem = new FoundVideoModel();
+                VideoItem.VideoUrl = VideoUrl ?? string.Empty;
+                VideoItem.VideoId = LoadedResponse["vid"]?.ToString() ?? string.Empty;
                 VideoItem.VideoTitle = LoadedResponse["title"]?.ToString() ?? string.Empty;
                 VideoItem.VideoDurationTimeSec = int.Parse(LoadedResponse["t"]?.ToString() ?? "0");
                 VideoItem.YtChannel = LoadedResponse["a"]?.ToString() ?? string.Empty;

@@ -42,10 +42,10 @@
             </StackLayout>
 
             <StackLayout Spacing="60">
-                <Grid>
-                    <Button x:Name="downloadButton" Text="Stáhnout" Margin="40" IsEnabled="False" Clicked="DownloadButton_Clicked"/>
+                <Button x:Name="downloadButton" Text="Stáhnout" Margin="40" IsEnabled="False" Clicked="DownloadButton_Clicked"/>
 
-                    <ActivityIndicator IsVisible="False" Opacity="0" x:Name="InnerActivityIndicator" IsRunning="True" HorizontalOptions="Center" Color="White">
+                <StackLayout>
+                    <ActivityIndicator Opacity="0" x:Name="InnerActivityIndicator" IsRunning="True" HorizontalOptions="Center" Color="#ef8377">
                         <ActivityIndicator.Margin>
                             <OnPlatform x:TypeArguments="Thickness">
                                 <On Platform="iOS" Value="0,0,10,0"></On>
@@ -53,12 +53,13 @@
                         </ActivityIndicator.Margin>
                         <ActivityIndicator.Scale>
                             <OnPlatform x:TypeArguments="x:Double">
-                                <On Platform="iOS">1</On>
-                                <On Platform="Android">0.7</On>
+                                <On Platform="iOS">1.2</On>
+                                <On Platform="Android">1.2</On>
                             </OnPlatform>
                         </ActivityIndicator.Scale>
                     </ActivityIndicator>
-                </Grid>
+                </StackLayout>
+
 
                 <StackLayout Margin="11" >
                     <Label Text="Probíhá stahování:" x:Name="DownloadLabel" IsVisible="False" FontSize="18"/>
