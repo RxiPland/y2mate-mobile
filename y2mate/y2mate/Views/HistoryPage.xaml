@@ -31,10 +31,10 @@
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:FoundVideoModel">
                     <ViewCell>
-                        <Grid Padding="9">
+                        <Grid Padding="10">
                             <Frame>
                                 <StackLayout Orientation="Horizontal">
-                                    <Label Text="{Binding VideoTitle}" HorizontalOptions="StartAndExpand"/>
+                                    <Label Text="{Binding VideoTitle}" HorizontalOptions="StartAndExpand" FontAttributes="Bold"/>
                                     <Label Text="{Binding YtChannel}" HorizontalOptions="EndAndExpand"/>
                                 </StackLayout>
                             </Frame>
