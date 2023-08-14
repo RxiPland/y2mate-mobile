@@ -9,6 +9,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using y2mate.API;
 using y2mate.Config;
+using y2mate.Models;
 
 namespace y2mate.Views
 {
@@ -108,14 +109,92 @@ namespace y2mate.Views
                 catch (Exception)
                 {
                     await ShowErrorMessage(Messages.EmptyResponseError);
-                    RestoreWidgets(0);
+                    await RestoreWidgets(0);
                     return;
                 }
 
-                InnerActivityIndicator.Opacity = 0;
-                //await Navigation.PushAsync(new DownloadPage(LoadedResponse));
-                await Navigation.PushAsync(new DownloadPage());
 
+                // Check for JSON keys
+                foreach (string key in GlobalConfig.RequiredSearchResponseKeys)
+                {
+                    if (!LoadedResponse.ContainsKey(key))
+                    {
+                        // Error message
+                        await ShowErrorMessage(Messages.KeyFromResponseNotFound.Replace("{key}", key));
+                        await RestoreWidgets(0);
+
+                        return;
+                    }
+                }
+
+
+                string responseStatus = LoadedResponse["status"]?.ToString() ?? string.Empty;
+                string responseMessage = LoadedResponse["mess"]?.ToString() ?? string.Empty;
+
+                if (responseMessage.Contains("Please enter valid video URL.") || responseMessage.Contains("Sorry! An error has occurred."))
+                {
+                    // Video doesn't exists error
+                    await ShowErrorMessage(Messages.VideoNotExists);
+                    await RestoreWidgets(0);
+
+                    return;
+                }
+                else if (responseStatus.ToLower() != "ok")
+                {
+                    // Unknown error
+                    await ShowErrorMessage($"Nastala neznámá chyba. Y2mate vrátil:\n\n{response}");
+                    await RestoreWidgets(0);
+
+                    return;
+                }
+
+                FoundVideoModel VideoItem = new FoundVideoModel();
+                VideoItem.VideoTitle = LoadedResponse["title"]?.ToString() ?? string.Empty;
+                VideoItem.VideoDurationTimeSec = int.Parse(LoadedResponse["t"]?.ToString() ?? "0");
+                VideoItem.YtChannel = LoadedResponse["a"]?.ToString() ?? string.Empty;
+
+                try
+                {
+                    JObject QualitiesJson = (JObject)LoadedResponse["links"];
+
+                    JObject mp3Json = (JObject)QualitiesJson["mp3"];
+
+                    foreach (var mp3 in mp3Json)
+                    {
+                        JObject mp3QualityTemp = (JObject)mp3.Value;
+
+                        if (mp3QualityTemp["f"].ToString() == "mp3")
+                        {
+                            VideoItem.AvailableMP3.Add(mp3QualityTemp["q"].ToString().Trim(), mp3QualityTemp["k"].ToString().Trim());
+                        }
+                    }
+
+
+                    JObject mp4Json = (JObject)QualitiesJson["mp4"];
+
+                    foreach (var mp4 in mp4Json)
+                    {
+                        JObject mp4QualityTemp = (JObject)mp4.Value;
+
+                        if (mp4QualityTemp["f"].ToString() == "mp4")
+                        {
+                            VideoItem.AvailableMP4.Add(mp4QualityTemp["q"].ToString().Trim(), mp4QualityTemp["k"].ToString().Trim());
+                        }
+                    }
+                }
+                catch(Exception ex)
+                {
+                    // Unknown error
+                    await ShowErrorMessage($"Nastala chyba: {ex.Message}");
+                    await RestoreWidgets(0);
+
+                    return;
+                }
+
+
+                await Navigation.PushAsync(new DownloadPage(VideoItem));
+
+                InnerActivityIndicator.Opacity = 0;
                 RestoreWidgets(1000);
             }
             else

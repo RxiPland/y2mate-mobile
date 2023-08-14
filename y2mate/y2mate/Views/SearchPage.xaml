@@ -45,7 +45,14 @@
                     </Label.FormattedText>
                 </Label>
 
-                <Entry x:Name="VideoUrlEntry" TextChanged="VideoUrlEntry_TextChanged" PlaceholderColor="LightGray" Placeholder="https://youtube.com ..." ClearButtonVisibility="Never"/>
+                <StackLayout Padding="5,0,0,0" Orientation="Horizontal">
+                    <Image>
+                        <Image.Source>
+                            <FontImageSource FontFamily="MIR" Glyph="{StaticResource MIR_Link}" Color="Black"/>
+                        </Image.Source> 
+                    </Image>
+                    <Entry x:Name="VideoUrlEntry" TextChanged="VideoUrlEntry_TextChanged" PlaceholderColor="LightGray" Placeholder="https://youtube.com ..." ClearButtonVisibility="Never" HorizontalOptions="FillAndExpand"/>
+                </StackLayout>
 
                 <Grid Padding="0,25,0,0">
                     <Grid.ColumnDefinitions>
