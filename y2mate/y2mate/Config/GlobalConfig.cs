@@ -24,6 +24,8 @@ namespace y2mate.Config
         public static readonly string UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36";
         public static readonly bool IgnoreSSLCertificates = true;
 
+        // Y2mate
+        public static readonly string[] RequiredSearchResponseKeys = { "status", "mess", "title", "t", "a", "vid", "links" };
 
         // UI
         public static readonly int RefreshIconDurationMs = 2000;
