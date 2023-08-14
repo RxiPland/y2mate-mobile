@@ -16,6 +16,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using System.Security.Cryptography;
 using y2mate.Models;
+using MvvmHelpers;
 
 namespace y2mate.API
 {
@@ -525,6 +526,141 @@ namespace y2mate.API
             }
 
             return sb.ToString();
+        }
+
+        public static async Task<ObservableRangeCollection<FoundVideoModel>> LoadHistoryFromFile()
+        {
+            ObservableRangeCollection<FoundVideoModel> foundVideosHistory = new();
+            string FileContent = string.Empty;
+            string FilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), GlobalConfig.VideosHistoryFileName);
+
+            if (!File.Exists(FilePath))
+            {
+                // File with history not created yet
+
+                return foundVideosHistory;
+            }
+
+            // Async read from file
+            try
+            {
+                using (StreamReader reader = new StreamReader(FilePath))
+                {
+                    FileContent = await reader.ReadToEndAsync();
+                }
+
+                ObservableRangeCollection<FoundVideoModel> TempVideosHistory = new();
+                JObject TempJson;
+                FoundVideoModel TempVideoItem;
+                JArray LoadedHistory = new JArray();
+
+                if (!string.IsNullOrEmpty(FileContent))
+                {
+                    LoadedHistory = JArray.Parse(FileContent);
+
+                    foreach (var video in LoadedHistory)
+                    {
+                        TempJson = video.ToObject<JObject>();
+                        TempVideoItem = new FoundVideoModel();
+
+                        TempVideoItem.VideoTitle = TempJson["VideoTitle"]?.ToString() ?? string.Empty;
+                        TempVideoItem.VideoId = TempJson["VideoId"]?.ToString() ?? string.Empty;
+                        TempVideoItem.YtChannel = TempJson["YtChannel"]?.ToString() ?? string.Empty;
+                        TempVideoItem.VideoUrl = TempJson["VideoUrl"]?.ToString() ?? string.Empty;
+                        TempVideoItem.VideoDurationTimeSec = int.Parse(TempJson["VideoDurationTimeSec"]?.ToString() ?? "0");
+
+                        TempVideosHistory.Add(TempVideoItem);
+                    }
+
+                    foundVideosHistory.AddRange(TempVideosHistory);
+
+                    return foundVideosHistory;
+                }
+                else
+                {
+                    // Not parsed
+
+                    return foundVideosHistory;
+                }
+            }
+            catch
+            {
+                // Error parsing
+                return foundVideosHistory;
+            }
+
+        }
+
+        public async static Task DeleteHistory()
+        {
+            string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), GlobalConfig.VideosHistoryFileName);
+
+            try
+            {
+                if (File.Exists(filePath))
+                {
+                    await Task.Run(() => File.Delete(filePath));
+                }
+            }
+            catch (Exception)
+            {
+                // Error deleting file
+            }
+        }
+
+        public async static Task<bool> SaveVideoToHistory(FoundVideoModel videoModel)
+        {
+            JArray VideosHistory = new JArray();
+
+            string FileContent = string.Empty;
+            string FilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), GlobalConfig.VideosHistoryFileName);
+
+            if (File.Exists(FilePath))
+            {
+                // Async read from file
+                try
+                {
+                    using (StreamReader reader = new StreamReader(FilePath))
+                    {
+                        FileContent = await reader.ReadToEndAsync();
+                    }
+
+                    VideosHistory = JArray.Parse(FileContent);
+                }
+                catch
+                {
+                    // Error parsing JSON
+
+                    await DeleteHistory();
+                }
+            }
+
+            JObject VideoTemp = new JObject();
+            VideoTemp["VideoTitle"] = videoModel.VideoTitle ?? string.Empty;
+            VideoTemp["VideoId"] = videoModel.VideoId ?? string.Empty;
+            VideoTemp["YtChannel"] = videoModel.YtChannel ?? string.Empty;
+            VideoTemp["VideoUrl"] = videoModel.VideoUrl ?? string.Empty;
+            VideoTemp["VideoDurationTimeSec"] = videoModel.VideoDurationTimeSec.ToString() ?? "0";
+
+            VideosHistory.Add(VideoTemp);
+
+            // Async write to file
+            try
+            {
+                using (StreamWriter writer = new StreamWriter(FilePath, false))
+                {
+                    await writer.WriteAsync(VideosHistory.ToString() ?? string.Empty);
+                }
+
+                // Check if created
+                return File.Exists(FilePath);
+
+            }
+            catch (Exception)
+            {
+                // Unknown error
+                return false;
+            }
         }
     }
 }

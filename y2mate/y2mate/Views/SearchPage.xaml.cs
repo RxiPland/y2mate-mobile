@@ -21,6 +21,17 @@ namespace y2mate.Views
             InitializeComponent();
         }
 
+        public SearchPage(FoundVideoModel VideoForSearch=null)
+        {
+            InitializeComponent();
+
+            if(VideoForSearch != null)
+            {
+                VideoUrlEntry.Text = VideoForSearch.VideoUrl;
+                SearchButton_Clicked();
+            }
+        }
+
         private async Task ShowErrorMessage(string Message, uint Length = 600)
         {
             ErrorMessageLabel.Text = Message;
@@ -70,7 +81,7 @@ namespace y2mate.Views
             await HideErrorMessage(500);
         }
 
-        private void VideoUrlEntry_TextChanged(object sender, TextChangedEventArgs e)
+        private void VideoUrlEntry_TextChanged(object sender = null, TextChangedEventArgs e = null)
         {
 
             SearchButton.IsEnabled = !string.IsNullOrEmpty(VideoUrlEntry.Text);

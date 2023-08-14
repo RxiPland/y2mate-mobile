@@ -1,12 +1,58 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="y2mate.Views.HistoryPage">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
+             x:Class="y2mate.Views.HistoryPage"
+             xmlns:viewmodels="clr-namespace:y2mate.ViewModels"
+             xmlns:models="clr-namespace:y2mate.Models"
+             x:DataType="viewmodels:HistoryViewModel">
+
+    <ContentPage.BindingContext>
+        <viewmodels:HistoryViewModel/>
+    </ContentPage.BindingContext>
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Smazat vše" Command="{Binding DeleteHistoryCommand}"/>
+    </ContentPage.ToolbarItems>
+
+
+
+    <StackLayout>
+        <ListView
+            x:Name="HistoryItemsListView"
+            VerticalOptions="StartAndExpand"
+            BackgroundColor="Transparent"
+            ItemsSource="{Binding foundVideosHistory}"
+            HasUnevenRows="True"
+            RefreshControlColor="#ef8377"
+            ItemTapped="HistoryItemsListView_ItemTapped"
+            SelectedItem="{Binding VideoSelected}"
+            SeparatorVisibility="None">
+
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="models:FoundVideoModel">
+                    <ViewCell>
+                        <Grid Padding="9">
+                            <Frame>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding VideoTitle}" HorizontalOptions="StartAndExpand"/>
+                                    <Label Text="{Binding YtChannel}" HorizontalOptions="EndAndExpand"/>
+                                </StackLayout>
+                            </Frame>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+            <ListView.Footer>
+                <StackLayout>
+                    <Button Margin="25" IsVisible="{Binding IsNotBusy}" Text="Nahoru" x:Name="BackToStartButton" Clicked="BackToStartButton_Clicked"/>
+                </StackLayout>
+            </ListView.Footer>
+        </ListView>
+        
+        
+        
+        
+    </StackLayout>
+
 </ContentPage>

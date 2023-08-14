@@ -11,6 +11,7 @@ namespace y2mate.Config
         public static readonly string AppName = "y2mate";
 
         public static readonly string SettingsFileName = "Settings.json";
+        public static readonly string VideosHistoryFileName = "VideoHistory.json";
         public static readonly string DownloadFolder = "/storage/emulated/0/Download";
 
 
@@ -20,7 +21,7 @@ namespace y2mate.Config
         public static readonly string ApiSearchUrl = ApiUrl + "/mates/analyzeV2/ajax";
         public static readonly string ApiRequestVideoUrl = ApiUrl + "/mates/convertV2/index";
 
-        public static readonly int RequestTimeout = 10;
+        public static readonly int RequestTimeout = 60;
         public static readonly string UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36";
         public static readonly bool IgnoreSSLCertificates = true;
 

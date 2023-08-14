@@ -184,24 +184,6 @@ namespace y2mate.Views
                     string responseMessage = LoadedResponse["mess"]?.ToString() ?? string.Empty;
                     string convertedStatus = LoadedResponse["c_status"]?.ToString() ?? string.Empty;
 
-                    if (!string.IsNullOrEmpty(responseMessage))
-                    {
-                        // Error in message
-                        await DisplayAlert("Zpráva", $"Y2mate vrátil zprávu:\n\n{response}", "OK");
-                        await SetLoadingToButton(false);
-
-                        return;
-                    }
-                    else if (responseStatus.ToLower() != "ok")
-                    {
-                        // Unknown error
-                        await DisplayAlert("Nastala chyba!", $"Nastala neznámá chyba. Y2mate vrátil:\n\n{response}", "OK");
-                        await SetLoadingToButton(false);
-
-                        return;
-                    }
-
-
                     if (convertedStatus == "CONVERTED")
                     {
                         DownloadLink = LoadedResponse["dlink"]?.ToString() ?? string.Empty;
@@ -223,6 +205,22 @@ namespace y2mate.Views
                         return;
                     }
 
+                    if (!string.IsNullOrEmpty(responseMessage))
+                    {
+                        // Error in message
+                        await DisplayAlert("Zpráva", $"Y2mate vrátil zprávu:\n\n{responseHtml}", "OK");
+                        await SetLoadingToButton(false);
+
+                        return;
+                    }
+                    else if (responseStatus.ToLower() != "ok")
+                    {
+                        // Unknown error
+                        await DisplayAlert("Nastala chyba!", $"Nastala neznámá chyba. Y2mate vrátil:\n\n{responseHtml}", "OK");
+                        await SetLoadingToButton(false);
+
+                        return;
+                    }
 
                 }
                 catch (Exception)
@@ -424,6 +422,7 @@ namespace y2mate.Views
                 }
             }
 
+            await WebApi.SaveVideoToHistory(VideoItem);
 
             bool OpenFile = await DisplayAlert("Úspěch", $"Video bylo úspěšně staženo do složky Downloads.", "Otevřít", "OK");
             await Shell.Current.GoToAsync("..");
