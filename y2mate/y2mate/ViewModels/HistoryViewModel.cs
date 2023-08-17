@@ -30,7 +30,8 @@ namespace y2mate.ViewModels
             {
                 if (value != null)
                 {
-                    Application.Current.MainPage.Navigation.PushAsync(new SearchPage(value));
+                    //Application.Current.MainPage.Navigation.PushAsync(new SearchPage(value));
+                    Shell.Current.GoToAsync($"//SearchPage?VideoUrl={Uri.EscapeDataString(value.VideoUrl)}");
 
                     value = null;
                 }

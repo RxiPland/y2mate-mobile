@@ -2,7 +2,9 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="y2mate.Views.DownloadPage"
-             Shell.PresentationMode="ModalAnimated">
+             Shell.PresentationMode="ModalAnimated"
+             BackgroundColor="{AppThemeBinding Dark={StaticResource WindowBackgroundColorDark}, Light={StaticResource WindowBackgroundColorLight}}"
+             Style="{AppThemeBinding Dark={StaticResource BaseStyleDark}, Light={StaticResource BaseStyle}}">
 
     <ScrollView>
         <StackLayout Padding="0,20,0,0">
@@ -11,8 +13,8 @@
                 <Label>
                     <Label.FormattedText>
                         <FormattedString>
-                            <Span Text="Název: " FontAttributes="Bold" FontSize="16"/>
-                            <Span x:Name="videoTitle" FontSize="16"/>
+                            <Span Text="Název: " FontAttributes="Bold" FontSize="16" TextColor="{AppThemeBinding Dark={StaticResource TextColorDark}, Light={StaticResource TextColorLight}}"/>
+                            <Span x:Name="videoTitle" FontSize="16" TextColor="{AppThemeBinding Dark={StaticResource TextColorDark}, Light={StaticResource TextColorLight}}"/>
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>
@@ -20,8 +22,8 @@
                 <Label>
                     <Label.FormattedText>
                         <FormattedString>
-                            <Span Text="Délka: " FontAttributes="Bold" FontSize="16"/>
-                            <Span x:Name="videoLength" FontSize="16"/>
+                            <Span Text="Délka: " FontAttributes="Bold" FontSize="16" TextColor="{AppThemeBinding Dark={StaticResource TextColorDark}, Light={StaticResource TextColorLight}}"/>
+                            <Span x:Name="videoLength" FontSize="16" TextColor="{AppThemeBinding Dark={StaticResource TextColorDark}, Light={StaticResource TextColorLight}}"/>
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>
@@ -29,8 +31,8 @@
                 <Label>
                     <Label.FormattedText>
                         <FormattedString>
-                            <Span Text="Kanál: " FontAttributes="Bold" FontSize="16"/>
-                            <Span x:Name="ytChannel" FontSize="16"/>
+                            <Span Text="Kanál: " FontAttributes="Bold" FontSize="16" TextColor="{AppThemeBinding Dark={StaticResource TextColorDark}, Light={StaticResource TextColorLight}}"/>
+                            <Span x:Name="ytChannel" FontSize="16" TextColor="{AppThemeBinding Dark={StaticResource TextColorDark}, Light={StaticResource TextColorLight}}"/>
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>
@@ -46,19 +48,13 @@
                 <Button x:Name="downloadButton" Text="Stáhnout" Margin="40" IsEnabled="False" Clicked="DownloadButton_Clicked"/>
 
                 <StackLayout>
-                    <ActivityIndicator Opacity="0" x:Name="InnerActivityIndicator" IsRunning="True" HorizontalOptions="Center" Color="#ef8377">
-                        <ActivityIndicator.Margin>
-                            <OnPlatform x:TypeArguments="Thickness">
-                                <On Platform="iOS" Value="0,0,10,0"></On>
-                            </OnPlatform>
-                        </ActivityIndicator.Margin>
-                        <ActivityIndicator.Scale>
-                            <OnPlatform x:TypeArguments="x:Double">
-                                <On Platform="iOS">1.2</On>
-                                <On Platform="Android">1.2</On>
-                            </OnPlatform>
-                        </ActivityIndicator.Scale>
-                    </ActivityIndicator>
+                    <ActivityIndicator
+                        Opacity="0"
+                        Scale="1.2"
+                        x:Name="InnerActivityIndicator"
+                        IsRunning="True"
+                        HorizontalOptions="Center"
+                        Color="#ef8377"/>
                 </StackLayout>
 
 

@@ -4,8 +4,11 @@
              x:Class="y2mate.Views.HistoryPage"
              xmlns:viewmodels="clr-namespace:y2mate.ViewModels"
              xmlns:models="clr-namespace:y2mate.Models"
-             x:DataType="viewmodels:HistoryViewModel">
-
+             x:DataType="viewmodels:HistoryViewModel"
+             Shell.PresentationMode="ModalAnimated"
+             BackgroundColor="{AppThemeBinding Dark={StaticResource WindowBackgroundColorDark}, Light={StaticResource WindowBackgroundColorLight}}"
+             Style="{AppThemeBinding Dark={StaticResource BaseStyleDark}, Light={StaticResource BaseStyle}}">
+             
     <ContentPage.BindingContext>
         <viewmodels:HistoryViewModel/>
     </ContentPage.BindingContext>
@@ -20,10 +23,9 @@
         <ListView
             x:Name="HistoryItemsListView"
             VerticalOptions="StartAndExpand"
-            BackgroundColor="Transparent"
             ItemsSource="{Binding foundVideosHistory}"
             HasUnevenRows="True"
-            RefreshControlColor="#ef8377"
+            BackgroundColor="Transparent"
             ItemTapped="HistoryItemsListView_ItemTapped"
             SelectedItem="{Binding VideoSelected}"
             SeparatorVisibility="None">
@@ -32,10 +34,10 @@
                 <DataTemplate x:DataType="models:FoundVideoModel">
                     <ViewCell>
                         <Grid Padding="10">
-                            <Frame>
+                            <Frame BackgroundColor="{AppThemeBinding Dark={StaticResource Gray600}, Light={StaticResource White}}">
                                 <StackLayout Orientation="Horizontal">
-                                    <Label Text="{Binding VideoTitle}" HorizontalOptions="StartAndExpand" FontAttributes="Bold"/>
-                                    <Label Text="{Binding YtChannel}" HorizontalOptions="EndAndExpand"/>
+                                    <Label Text="{Binding VideoTitle}" HorizontalOptions="StartAndExpand" FontAttributes="Bold" TextColor="{AppThemeBinding Dark={StaticResource TextColorDark}, Light={StaticResource TextColorLight}}"/>
+                                    <Label Text="{Binding YtChannel}" HorizontalOptions="EndAndExpand" TextColor="{AppThemeBinding Dark={StaticResource TextColorDark}, Light={StaticResource TextColorLight}}"/>
                                 </StackLayout>
                             </Frame>
                         </Grid>

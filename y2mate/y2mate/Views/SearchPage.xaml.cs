@@ -14,22 +14,27 @@ using y2mate.Models;
 namespace y2mate.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
+    [QueryProperty("SetVideoUrl", "VideoUrl")]
     public partial class SearchPage : ContentPage
     {
+        public string SetVideoUrl
+        {
+            set
+            {
+                value = value?.Trim();
+
+                if(!string.IsNullOrEmpty(value))
+                {
+                    VideoUrlEntry.Text = value;
+                    SearchButton_Clicked();
+                }
+            }
+        }
+
+
         public SearchPage()
         {
             InitializeComponent();
-        }
-
-        public SearchPage(FoundVideoModel VideoForSearch=null)
-        {
-            InitializeComponent();
-
-            if(VideoForSearch != null)
-            {
-                VideoUrlEntry.Text = VideoForSearch.VideoUrl;
-                SearchButton_Clicked();
-            }
         }
 
         private async Task ShowErrorMessage(string Message, uint Length = 600)
@@ -205,7 +210,7 @@ namespace y2mate.Views
                 }
 
 
-                await Navigation.PushAsync(new DownloadPage(VideoItem));
+                Navigation.PushAsync(new DownloadPage(VideoItem));
 
                 InnerActivityIndicator.Opacity = 0;
                 RestoreWidgets(1000);

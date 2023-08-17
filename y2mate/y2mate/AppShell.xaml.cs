@@ -12,9 +12,5 @@ namespace y2mate
             InitializeComponent();
         }
 
-        private async void OnMenuItemClicked(object sender = null, EventArgs e = null)
-        {
-            await Shell.Current.GoToAsync("//LoginPage");
-        }
     }
 }

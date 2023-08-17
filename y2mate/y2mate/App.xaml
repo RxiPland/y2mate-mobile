@@ -7,8 +7,65 @@
     -->
     <Application.Resources>
         <ResourceDictionary>
-
+            
+            <!-- Colors -->
             <Color x:Key="Primary">#2196F3</Color>
+
+            <Color x:Key="WindowBackgroundColorLight">#f5f5f5</Color>
+            <Color x:Key="WindowBackgroundColorDark">#121212</Color>
+
+            <Color x:Key="FontIconColorLight">#121212</Color>
+            <Color x:Key="FontIconColorDark">#dbdbdb</Color>
+
+            <Color x:Key="TextColorLight">#121212</Color>
+            <Color x:Key="TextColorDark">#f5f5f5</Color>
+
+
+            <Color x:Key="White">#f5f5f5</Color>
+            <Color x:Key="Black">#121212</Color>
+            <Color x:Key="Gray100">#E1E1E1</Color>
+            <Color x:Key="Gray200">#C8C8C8</Color>
+            <Color x:Key="Gray300">#ACACAC</Color>
+            <Color x:Key="Gray400">#919191</Color>
+            <Color x:Key="Gray500">#6E6E6E</Color>
+            <Color x:Key="Gray600">#404040</Color>
+            <Color x:Key="Gray900">#212121</Color>
+            <Color x:Key="Gray950">#141414</Color>
+
+            <!-- Styles -->
+
+            <Style x:Key="BaseStyle" TargetType="Shell">
+                <Setter Property="Shell.BackgroundColor" Value="{StaticResource Primary}" />
+                <Setter Property="Shell.ForegroundColor" Value="White" />
+                <Setter Property="Shell.TitleColor" Value="White" />
+                <Setter Property="Shell.DisabledColor" Value="#B4FFFFFF" />
+                <Setter Property="Shell.UnselectedColor" Value="#95FFFFFF" />
+                <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource Primary}" />
+                <Setter Property="Shell.TabBarForegroundColor" Value="White"/>
+                <Setter Property="Shell.TabBarUnselectedColor" Value="#95FFFFFF"/>
+                <Setter Property="Shell.TabBarTitleColor" Value="White"/>
+
+                <Setter Property="FlyoutBackgroundColor" Value="White"/>
+            </Style>
+
+            <Style x:Key="BaseStyleDark" TargetType="Shell">
+                <Setter Property="Shell.BackgroundColor" Value="{StaticResource Primary}" />
+                <Setter Property="Shell.ForegroundColor" Value="Black" />
+                <Setter Property="Shell.TitleColor" Value="Black" />
+                <Setter Property="Shell.DisabledColor" Value="#B4FFFFFF" />
+                <Setter Property="Shell.UnselectedColor" Value="#95FFFFFF" />
+                <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource Primary}" />
+                <Setter Property="Shell.TabBarForegroundColor" Value="Black"/>
+                <Setter Property="Shell.TabBarUnselectedColor" Value="#95FFFFFF"/>
+                <Setter Property="Shell.TabBarTitleColor" Value="Black"/>
+
+                <Setter Property="FlyoutBackgroundColor" Value="Black"/>
+            </Style>
+
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="{AppThemeBinding Dark={StaticResource TextColorDark}, Light={StaticResource TextColorLight}}"/>
+            </Style>
+
 
             <!-- https://andreinitescu.github.io/IconFont2Code/ -->
 

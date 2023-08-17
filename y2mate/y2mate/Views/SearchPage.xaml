@@ -1,7 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="y2mate.Views.SearchPage">
+             x:Class="y2mate.Views.SearchPage"
+             Shell.PresentationMode="ModalAnimated"
+             BackgroundColor="{AppThemeBinding Dark={StaticResource WindowBackgroundColorDark}, Light={StaticResource WindowBackgroundColorLight}}"
+             Style="{AppThemeBinding Dark={StaticResource BaseStyleDark}, Light={StaticResource BaseStyle}}">
+    
+
 
     <ScrollView>
         <StackLayout>
@@ -11,7 +16,7 @@
                 <Label x:Name="ErrorMessageLabel"
                     Text="Error Text"
                     BackgroundColor="#ef8377"
-                    TextColor="#f5f5f5"
+                    TextColor="White"
                     FontSize="15"
                     Padding="7"
                     Opacity="0"
@@ -40,7 +45,7 @@
 
                     <Label.FormattedText>
                         <FormattedString>
-                            <Span Text="Vložte odkaz na video:" FontSize="17" TextColor="Black"/>
+                            <Span Text="Vložte odkaz na video:" FontSize="17" TextColor="{AppThemeBinding Dark={StaticResource TextColorDark}, Light={StaticResource TextColorLight}}"/>
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>
@@ -48,12 +53,20 @@
                 <StackLayout Padding="5,0,0,0" Orientation="Horizontal">
                     <Image>
                         <Image.Source>
-                            <FontImageSource FontFamily="MIR" Glyph="{StaticResource MIR_Link}" Color="Black"/>
+                            <FontImageSource FontFamily="MIR" Glyph="{StaticResource MIR_Link}" Color="{AppThemeBinding Dark={StaticResource FontIconColorDark}, Light={StaticResource FontIconColorLight}}"/>
                         </Image.Source> 
                     </Image>
-                    <Entry x:Name="VideoUrlEntry" TextChanged="VideoUrlEntry_TextChanged" PlaceholderColor="LightGray" Placeholder="https://youtube.com ..." ClearButtonVisibility="Never" HorizontalOptions="FillAndExpand"/>
+                    <Entry
+                        x:Name="VideoUrlEntry"
+                        TextChanged="VideoUrlEntry_TextChanged"
+                        Placeholder="https://youtube.com ..."
+                        ClearButtonVisibility="Never"
+                        HorizontalOptions="FillAndExpand"
+                        PlaceholderColor="LightGray"
+                        TextColor="{AppThemeBinding Dark={StaticResource TextColorDark}, Light={StaticResource TextColorLight}}"/>
                 </StackLayout>
 
+                
                 <Grid Padding="0,25,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="2*" />
@@ -67,19 +80,8 @@
             </StackLayout>
 
             <StackLayout>
-                <ActivityIndicator Opacity="0" x:Name="InnerActivityIndicator" IsRunning="True" HorizontalOptions="Center" Color="#ef8377">
-                    <ActivityIndicator.Margin>
-                        <OnPlatform x:TypeArguments="Thickness">
-                            <On Platform="iOS" Value="0,0,10,0"></On>
-                        </OnPlatform>
-                    </ActivityIndicator.Margin>
-                    <ActivityIndicator.Scale>
-                        <OnPlatform x:TypeArguments="x:Double">
-                            <On Platform="iOS">1.2</On>
-                            <On Platform="Android">1.2</On>
-                        </OnPlatform>
-                    </ActivityIndicator.Scale>
-                </ActivityIndicator>
+                <ActivityIndicator Opacity="0" Scale="1.2" x:Name="InnerActivityIndicator" IsRunning="True" HorizontalOptions="Center" Color="#ef8377"/>
+
             </StackLayout>
 
         </StackLayout>

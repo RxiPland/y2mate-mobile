@@ -1,8 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="y2mate.Views.InfoPage">
-
+             x:Class="y2mate.Views.InfoPage"
+             BackgroundColor="{AppThemeBinding Dark={StaticResource WindowBackgroundColorDark}, Light={StaticResource WindowBackgroundColorLight}}"
+             Style="{AppThemeBinding Dark={StaticResource BaseStyleDark}, Light={StaticResource BaseStyle}}">
+    
+    
     <StackLayout Margin="20" Spacing="15">
         
         <StackLayout Orientation="Horizontal" Spacing="15">
@@ -14,7 +17,7 @@
         <StackLayout Orientation="Horizontal" Spacing="15">
             <Image HeightRequest="40">
                 <Image.Source>
-                    <FontImageSource FontFamily="FAB" Glyph="{StaticResource FAB_Github}" Color="Black"/>
+                    <FontImageSource FontFamily="FAB" Glyph="{StaticResource FAB_Github}" Color="{AppThemeBinding Dark={StaticResource FontIconColorDark}, Light={StaticResource FontIconColorLight}}"/>
                 </Image.Source>
             </Image>
 
