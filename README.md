@@ -28,7 +28,7 @@
 <br/>
 
 # Odkazy ke stažení
-- [Stáhnout instalačku](https://github.com/RxiPland/y2mate-mobile/releases/download/v1.0.0/y2mate_android.apk) .apk (Android) `md5: 799e96778e37513d858954c22aa3e514`
+- [Stáhnout instalačku](https://github.com/RxiPland/y2mate-mobile/releases/download/v1.0.1/y2mate_android.apk) .apk (Android) `md5: 7f0ac59a11558d4ac2ce6de5332a22c9`
 
 <br/>
 
