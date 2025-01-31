@@ -1,3 +1,5 @@
+# Již nefunguje! (kvůli změně API)
+
 # Y2mate Android
 
 - Toto není oficiální aplikace! (This is not an official App!)
